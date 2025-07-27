@@ -19,6 +19,8 @@ import logoutAction from "@/actions/auth/logout";
 import { useRouter } from "next/navigation";
 import { IUserEntity } from "oneentry/dist/users/usersInterfaces";
 
+import useCartStore from "@/stores/cartStore";
+
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -26,6 +28,8 @@ export default function Navbar() {
   const [isLoading, setIsLoading] = useState(true);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
+  const cartItems = useCartStore((state) => state.cart);
 
   useEffect(() => {
     async function fetchUser() {
@@ -105,7 +109,7 @@ export default function Navbar() {
 
             <div>
               <Link href="/cart" onClick={handleMenuItemClick}>
-                {/* <Button
+                <Button
                   size="icon"
                   className="relative bg-transparent hover:bg-transparent cursor-pointer pt-2"
                   variant="ghost"
@@ -116,7 +120,7 @@ export default function Navbar() {
                       {cartItems.length}
                     </span>
                   )}
-                </Button> */}
+                </Button>
               </Link>
             </div>
             {isLoading && (
